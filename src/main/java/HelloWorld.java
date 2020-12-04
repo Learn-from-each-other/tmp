@@ -27,7 +27,6 @@ public class HelloWorld {
         map.put('/',3);
         map.put(')',4);
 
-
         char[] chars = next.toCharArray();
         Stack<Character> ch1 = new Stack<>();
         Stack<Character> ch2 = new Stack<>();
@@ -37,14 +36,24 @@ public class HelloWorld {
                 if (ch1.size() == 0){
                     ch1.push(item);
                 }else{
-                    if (map.get(ch1.peek()) < map.get(item)){
+                    if(item == '('){
                         ch1.push(item);
-                    }else{
-                        while (map.get(ch1.peek()) > map.get(item)){
+                    }else if(item == ')'){
+                        while (ch1.peek() != '(') {
                             char top = ch1.pop();
                             ch2.push(top);
                         }
-                        ch1.push(item);
+                        ch1.pop();
+                    }else{
+                        if (map.get(ch1.peek()) < map.get(item)){
+                            ch1.push(item);
+                        }else{
+                            while (map.get(ch1.peek()) >= map.get(item)){
+                                char top = ch1.pop();
+                                ch2.push(top);
+                            }
+                            ch1.push(item);
+                        }
                     }
                 }
             }else{
